@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"database/sql"
 	"net/http"
 
 	"github.com/febzey/forestbot-api/pkg/controllers"
@@ -13,20 +14,24 @@ type Route struct {
 	HandlerFunc http.HandlerFunc
 }
 
-var routes = []Route{
-	{
-		Method:      http.MethodGet,
-		Pattern:     "/",
-		HandlerFunc: controllers.Root,
-	},
-	{
-		Method:      http.MethodGet,
-		Pattern:     "/test",
-		HandlerFunc: controllers.Test,
-	},
-}
+func PublicRoutes(router *mux.Router, db *sql.DB) {
+	r := controllers.Routes{
+		DB: db,
+	}
 
-func PublicRoutes(router *mux.Router) {
+	var routes = []Route{
+		{
+			Method:      http.MethodGet,
+			Pattern:     "/test",
+			HandlerFunc: r.Test,
+		},
+		{
+			Method:      http.MethodGet,
+			Pattern:     "/playtime/{id}/",
+			HandlerFunc: r.GetPlaytime,
+		},
+	}
+
 	for _, route := range routes {
 		router.HandleFunc(route.Pattern, route.HandlerFunc).Methods(route.Method)
 	}

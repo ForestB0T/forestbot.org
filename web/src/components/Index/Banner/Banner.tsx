@@ -5,16 +5,25 @@ const Banner = ({ inviteUrl }: { inviteUrl: string }): JSX.Element => {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center justify-center mt-36 gap-36 py-20">
 
-            <div className="flex flex-col w-[84%] lg:w-3/4 mx-auto items-center text-center lg:text-left" id="banner-main">
+            <div className="flex flex-col w-[84%] lg:w-3/4 mx-auto items-center text-center" id="banner-main">
                 <div className="flex flex-col gap-6 lg:w-3/4">
                     <h1 className="lg:text-7xl text-5xl font-fredoka font-extrabold text-neutral-100">Forest<span className="text-sky-500">Bot</span>.</h1>
                     <p className="lg:text-3xl text-2xl text-neutral-100 font-medium font-poppins">The <span className="text-sky-400">all in one</span> Statistics tracking utility Bot for your Minecraft server<span className="text-sky-400 font-bold">.</span></p>
-                    <div className="flex flex-row gap-3 mx-auto lg:mx-0">
-                        <a href={inviteUrl} target="_blank" className="border-b-8 border-b-sky-600 hover:bg-sky-700 duration-150 rounded bg-sky-500 text-white font-semibold lg:w-44 w-36 h-12 items-center flex justify-center">Invite Me</a>
-                        <a href="" className="border-b-8 border-b-gray-700 hover:bg-gray-700 duration-200 rounded bg-gray-600 text-white font-semibold lg:w-44 w-36 h-12 items-center flex justify-center">Donate</a>
 
+                    <div className="flex lg:mr-auto flex-col">
+                        <div className="flex gap-3 flex-col mx-auto">
+
+                            <div className="flex flex-row gap-3">
+                                <a href={inviteUrl} target="_blank" className="border-b-8 border-b-sky-600 hover:bg-sky-700 duration-150 rounded bg-sky-500 text-white font-semibold lg:w-44 w-36 h-12 items-center flex justify-center">Invite Me</a>
+                                <a target="_blank" href="https://www.paypal.com/donate/?business=8RH6X55PX6RC8&no_recurring=0&item_name=If+you+like+and+support+Forestbot+and+want+to+see+him+continue+doing+what+he+does%2C+consider+dropping+a+donation.&currency_code=CAD" className="border-b-8 border-b-gray-700 hover:bg-gray-700 duration-200 rounded bg-gray-600 text-white font-semibold lg:w-44 w-36 h-12 items-center flex justify-center">Donate</a>
+                            </div>
+
+                            <a href="" className="mx-auto border-b-8 border-b-red-700 hover:bg-red-700 duration-200 rounded bg-red-600 text-white font-semibold lg:w-44 w-36 h-12 items-center flex justify-center">Data API</a>
+
+                        </div>
+                        <img src={wavey} className="px-8" />
                     </div>
-                    <img src={wavey} className="lg:-translate-x-8 px-8" />
+
                 </div>
             </div>
 
