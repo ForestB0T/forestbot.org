@@ -32,7 +32,6 @@ func EndConnection(db *sql.DB) {
 }
 
 func RunQuery(query string, db *sql.DB) (*sql.Rows, error) {
-	//run the query
 	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
