@@ -28,6 +28,8 @@ func (f *Routes) Test(w http.ResponseWriter, r *http.Request) {
 	db := f.DB
 
 	//run the query
+
+	//TODO! Fix query input error. sanatize;
 	rows, err := database.RunQuery("SELECT * FROM users", db)
 	if err != nil {
 		fmt.Println("Error running query:", err)
