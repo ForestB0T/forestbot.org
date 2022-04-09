@@ -1,10 +1,9 @@
 package controllers
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
-
-	"database/sql"
 
 	"github.com/gorilla/mux"
 )
@@ -15,19 +14,39 @@ type Routes struct {
 
 func (f *Routes) Test(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte(`{"message": "Testing route"}`))
 
+	params := mux.Vars(r)
 	db := f.DB
 
-	rows, err := db.Query("USE database1; SELECT * FROM users")
+	username := params["user"]
+	datab := params["db"]
+
+	_, err := db.Exec("use ?", datab)
 	if err != nil {
-		fmt.Println("Error running query:", err)
+		w.Write([]byte(`{"error": "Error while performing lookup"}`))
+		fmt.Println(err)
+		return
 	}
 
-	//print rows
+	rows, err := db.Query("SELECT playtime FROM users WHERE username = ?", username)
+	if err != nil {
+		fmt.Println(err)
+		w.Write([]byte(`{"error": "Error while performing lookup"}`))
+		return
+	}
 
-	fmt.Printf("%+v", rows)
+	defer fmt.Println("Hello, defered.")
+	defer rows.Close()
 
+	var playtime string
+	for rows.Next() {
+		err = rows.Scan(&playtime)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	w.Write([]byte(`{"playtime": "` + playtime + `"}`))
 }
 
 func (f *Routes) GetPlaytime(w http.ResponseWriter, r *http.Request) {

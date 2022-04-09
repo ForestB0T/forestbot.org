@@ -22,7 +22,7 @@ func PublicRoutes(router *mux.Router, db *sql.DB) {
 	var routes = []Route{
 		{
 			Method:      http.MethodGet,
-			Pattern:     "/test",
+			Pattern:     "/test/{user}/{db}",
 			HandlerFunc: r.Test,
 		},
 		{

@@ -31,8 +31,8 @@ func EndConnection(db *sql.DB) {
 	fmt.Println("Connection to database closed")
 }
 
-func RunQuery(query string, db *sql.DB) (*sql.Rows, error) {
-	rows, err := db.Query(query)
+func RunQuery(query string, db *sql.DB, args ...any) (*sql.Rows, error) {
+	rows, err := db.Query(query, args...)
 	if err != nil {
 		return nil, err
 	}
