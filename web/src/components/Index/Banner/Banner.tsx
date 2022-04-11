@@ -1,5 +1,6 @@
 //@ts-ignore
 import wavey from '../../../imgs/wavey.png';
+import { Link } from 'react-scroll';
 
 const Banner = ({ inviteUrl }: { inviteUrl: string }): JSX.Element => {
     return (
@@ -18,7 +19,7 @@ const Banner = ({ inviteUrl }: { inviteUrl: string }): JSX.Element => {
                                 <a target="_blank" href="https://www.paypal.com/donate/?business=8RH6X55PX6RC8&no_recurring=0&item_name=If+you+like+and+support+Forestbot+and+want+to+see+him+continue+doing+what+he+does%2C+consider+dropping+a+donation.&currency_code=CAD" className="border-b-8 border-b-gray-700 hover:bg-gray-700 duration-200 rounded bg-gray-600 text-white font-semibold lg:w-44 w-36 h-12 items-center flex justify-center">Donate</a>
                             </div>
 
-                            <a href="" className="mx-auto border-b-8 border-b-red-700 hover:bg-red-700 duration-200 rounded bg-red-600 text-white font-semibold lg:w-44 w-36 h-12 items-center flex justify-center">Data API</a>
+                            <Link to={"commands"} smooth={true} className="cursor-pointer mx-auto border-b-8 border-b-red-700 hover:bg-red-700 duration-200 rounded bg-red-600 text-white font-semibold lg:w-44 w-36 h-12 items-center flex justify-center">Commands</Link>
 
                         </div>
                         <img src={wavey} className="px-8" />

@@ -75,7 +75,6 @@ func getImageFromFilePath(filePath string) (image.Image, error) {
 var ()
 
 func DrawTablist(usersAndPing []User) *image.RGBA {
-	fmt.Println(usersAndPing)
 	dir, err := GetCurrentDirectory()
 	if err != nil {
 		fmt.Println(err)

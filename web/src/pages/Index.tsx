@@ -1,5 +1,7 @@
 import Banner from "../components/Index/Banner/Banner";
 import NavBar from "../components/NavBar/Nav";
+import Commands from "../components/Index/Commands/Commands";
+import Footer from "../components/Index/Footer/Footer";
 
 const Index = () => {
 
@@ -11,6 +13,8 @@ const Index = () => {
                 <NavBar/>
                 <Banner inviteUrl={inviteUrl} />
             </div>
+            <Commands/>
+            <Footer/>
         </>
 
 

@@ -379,8 +379,6 @@ func (f *Routes) GetLastDeath(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-//create a struct that models a object with a playerListExtra that is an array of objects
-
 type webSocketContents struct {
 	PlayerList      []string     `json:"playerList"`
 	PlayerListExtra []utils.User `json:"playerListExtra"`
@@ -394,24 +392,38 @@ func (f *Routes) GetTablist(w http.ResponseWriter, r *http.Request) {
 
 	var contents webSocketContents
 
-	u := url.URL{Scheme: "ws", Host: "localhost:8080", Path: "/playerlist"}
+	params := mux.Vars(r)
+	mc_server := params["server"]
+
+	var url_ws string
+
+	switch mc_server {
+	case "simplyvanilla":
+		url_ws = "ws-simply.forestbot.org"
+	case "eusurvival":
+		url_ws = "ws-eu.forestbot.org"
+	case "localhost":
+		url_ws = "localhost:8080"
+	}
+
+	u := url.URL{Scheme: "ws", Host: url_ws, Path: "/playerlist"}
 
 	conn, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
-		fmt.Println(err)
+		w.Write([]byte(`{"error": "An error occured while connecting to the websocket"}`))
 		return
 	}
 
 	for {
 		_, message, err := conn.ReadMessage()
 		if err != nil {
-			fmt.Println(err)
+			w.Write([]byte(`{"error": "An error occured while connecting to the websocket"}`))
 			return
 		}
 
 		err = json.Unmarshal(message, &contents)
 		if err != nil {
-			fmt.Println(err)
+			w.Write([]byte(`{"error": "An error occured while connecting to the websocket"}`))
 			return
 		}
 
