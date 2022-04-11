@@ -406,7 +406,7 @@ func (f *Routes) GetTablist(w http.ResponseWriter, r *http.Request) {
 		url_ws = "localhost:8080"
 	}
 
-	u := url.URL{Scheme: "ws", Host: url_ws, Path: "/playerlist"}
+	u := url.URL{Scheme: "wss", Host: url_ws, Path: "/playerlist"}
 
 	conn, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
