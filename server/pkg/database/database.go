@@ -3,12 +3,20 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func CreateConnection() (*sql.DB, error) {
-	db, err := sql.Open("mysql", "forest:treehouse@tcp(170.199.19.152:3306)/discord")
+	dbUser := os.Getenv("DATABASE_USER")
+	dbPassword := os.Getenv("DATABASE_PASSWORD")
+	dbHost := os.Getenv("DATABASE_HOST")
+	dbPort := os.Getenv("DATABASE_PORT")
+	dbName := os.Getenv("DATABASE")
+
+	db, err := sql.Open("mysql", dbUser+":"+dbPassword+"@tcp("+dbHost+":"+dbPort+")/"+dbName)
+
 	if err != nil {
 		return nil, err
 	}
@@ -29,13 +37,4 @@ func EndConnection(db *sql.DB) {
 		fmt.Println(err)
 	}
 	fmt.Println("Connection to database closed")
-}
-
-func RunQuery(query string, db *sql.DB, args ...any) (*sql.Rows, error) {
-	rows, err := db.Query(query, args...)
-	if err != nil {
-		return nil, err
-	}
-
-	return rows, nil
 }
