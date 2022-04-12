@@ -26,10 +26,10 @@ func (f *Routes) GetPlaytime(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	db := f.DB
 
-	username := params["user"]
+	user := params["user"]
 	mc_server := params["server"]
 
-	rows, err := db.Query("SELECT playtime FROM users WHERE username = ? AND mc_server = ?", username, mc_server)
+	rows, err := db.Query("SELECT username, playtime FROM users WHERE username = ? AND mc_server = ?", user, mc_server)
 	if err != nil {
 		fmt.Println(err)
 		w.Write([]byte(`{"error": "Error while performing lookup"}`))
@@ -40,13 +40,19 @@ func (f *Routes) GetPlaytime(w http.ResponseWriter, r *http.Request) {
 
 	var (
 		playtime int
+		username string
 	)
 	for rows.Next() {
-		err = rows.Scan(&playtime)
+		err = rows.Scan(&username, &playtime)
 		if err != nil {
 			w.Write([]byte(`{"error": "Error while performing lookup"}`))
 			return
 		}
+	}
+
+	if username == "" {
+		w.Write([]byte(`{"error": "User not found"}`))
+		return
 	}
 
 	w.Write([]byte(`{"playtime": ` + strconv.Itoa(playtime) + `}`))
@@ -63,10 +69,10 @@ func (f *Routes) GetKD(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	db := f.DB
 
-	username := params["user"]
+	user := params["user"]
 	mc_server := params["server"]
 
-	rows, err := db.Query("SELECT kills, deaths FROM users WHERE username = ? AND mc_server = ?", username, mc_server)
+	rows, err := db.Query("SELECT username, kills, deaths FROM users WHERE username = ? AND mc_server = ?", user, mc_server)
 	if err != nil {
 		fmt.Println(err)
 		w.Write([]byte(`{"error": "Error while performing lookup"}`))
@@ -76,15 +82,21 @@ func (f *Routes) GetKD(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	var (
+		username string
 		kills  int
 		deaths int
 	)
 	for rows.Next() {
-		err = rows.Scan(&kills, &deaths)
+		err = rows.Scan(&username, &kills, &deaths)
 		if err != nil {
 			w.Write([]byte(`{"error": "Error while performing lookup"}`))
 			return
 		}
+	}
+
+	if username == "" {
+		w.Write([]byte(`{"error": "User not found"}`))
+		return
 	}
 
 	w.Write([]byte(`{"kills": ` + strconv.Itoa(kills) + `, "deaths": ` + strconv.Itoa(deaths) + `}`))
@@ -101,10 +113,10 @@ func (f *Routes) GetJoins(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	db := f.DB
 
-	username := params["user"]
+	user := params["user"]
 	mc_server := params["server"]
 
-	rows, err := db.Query("SELECT joins FROM users WHERE username = ? AND mc_server = ?", username, mc_server)
+	rows, err := db.Query("SELECT username, joins FROM users WHERE username = ? AND mc_server = ?", user, mc_server)
 	if err != nil {
 		fmt.Println(err)
 		w.Write([]byte(`{"error": "Error while performing lookup"}`))
@@ -114,14 +126,20 @@ func (f *Routes) GetJoins(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	var (
+		username string
 		joins int
 	)
 	for rows.Next() {
-		err = rows.Scan(&joins)
+		err = rows.Scan(&username, &joins)
 		if err != nil {
 			w.Write([]byte(`{"error": "Error while performing lookup"}`))
 			return
 		}
+	}
+
+	if username == "" {
+		w.Write([]byte(`{"error": "User not found"}`))
+		return
 	}
 
 	w.Write([]byte(`{"joins": ` + strconv.Itoa(joins) + `}`))
@@ -138,10 +156,10 @@ func (f *Routes) GetLastSeen(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	db := f.DB
 
-	username := params["user"]
+	user := params["user"]
 	mc_server := params["server"]
 
-	rows, err := db.Query("SELECT lastseen FROM users WHERE username = ? AND mc_server = ?", username, mc_server)
+	rows, err := db.Query("SELECT username, lastseen FROM users WHERE username = ? AND mc_server = ?", user, mc_server)
 	if err != nil {
 		fmt.Println(err)
 		w.Write([]byte(`{"error": "Error while performing lookup"}`))
@@ -151,14 +169,20 @@ func (f *Routes) GetLastSeen(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	var (
+		username string
 		lastseen string
 	)
 	for rows.Next() {
-		err = rows.Scan(&lastseen)
+		err = rows.Scan(&username, &lastseen)
 		if err != nil {
 			w.Write([]byte(`{"error": "Error while performing lookup"}`))
 			return
 		}
+	}
+
+	if username == "" {
+		w.Write([]byte(`{"error": "User not found"}`))
+		return
 	}
 
 	w.Write([]byte(`{"lastseen": "` + lastseen + `"}`))
@@ -175,10 +199,10 @@ func (f *Routes) GetJoinDate(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	db := f.DB
 
-	username := params["user"]
+	user := params["user"]
 	mc_server := params["server"]
 
-	rows, err := db.Query("SELECT joindate FROM users WHERE username = ? AND mc_server = ?", username, mc_server)
+	rows, err := db.Query("SELECT username, joindate FROM users WHERE username = ? AND mc_server = ?", user, mc_server)
 	if err != nil {
 		fmt.Println(err)
 		w.Write([]byte(`{"error": "Error while performing lookup"}`))
@@ -188,14 +212,20 @@ func (f *Routes) GetJoinDate(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	var (
+		username string
 		joindate string
 	)
 	for rows.Next() {
-		err = rows.Scan(&joindate)
+		err = rows.Scan(&username, &joindate)
 		if err != nil {
 			w.Write([]byte(`{"error": "Error while performing lookup"}`))
 			return
 		}
+	}
+
+	if username == "" {
+		w.Write([]byte(`{"error": "User not found"}`))
+		return
 	}
 
 	w.Write([]byte(`{"joindate": "` + joindate + `"}`))
@@ -259,6 +289,11 @@ func (f *Routes) GetAllUserStats(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	if username == "" {
+		w.Write([]byte(`{"error": "User not found"}`))
+		return
+	}
+
 	w.Write([]byte(`{"username": "` + username + `", "kills": ` + strconv.Itoa(kills) + `, "deaths": ` + strconv.Itoa(deaths) + `, "joins": ` + strconv.Itoa(joins) + `, "leaves": ` + strconv.Itoa(leaves) + `, "lastseen": "` + lastseen + `", "joindate": "` + joindate + `", "uuid": "` + uuid + `", "playtime": ` + strconv.Itoa(playtime) + `, "lastdeath": "` + lastdeathString + `", "mc_server": "` + mc_server + `"}`))
 
 	return
@@ -286,15 +321,20 @@ func (f *Routes) GetMessageCount(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	var (
-		e   string
+		name   string
 		cnt int
 	)
 	for rows.Next() {
-		err = rows.Scan(&e, &cnt)
+		err = rows.Scan(&name, &cnt)
 		if err != nil {
 			w.Write([]byte(`{"error": "Error while performing lookup"}`))
 			return
 		}
+	}
+
+	if name == "" {
+		w.Write([]byte(`{"error": "User not found"}`))
+		return
 	}
 
 	w.Write([]byte(`{"messagecount": ` + strconv.Itoa(cnt) + `}`))
@@ -336,6 +376,11 @@ func (f *Routes) GetQuote(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	if name == "" {
+		w.Write([]byte(`{"error": "User not found"}`))
+		return
+	}
+
 	w.Write([]byte(`{"name": "` + name + `", "message": "` + message + `", "date": "` + date + `"}`))
 
 	return
@@ -353,7 +398,7 @@ func (f *Routes) GetLastDeath(w http.ResponseWriter, r *http.Request) {
 	user := params["user"]
 	mc := params["server"]
 
-	rows, err := db.Query("SELECT lastdeathTime, lastdeathString from users WHERE username = ? AND mc_server = ?", user, mc)
+	rows, err := db.Query("SELECT username, lastdeathTime, lastdeathString from users WHERE username = ? AND mc_server = ?", user, mc)
 	if err != nil {
 		fmt.Println(err)
 		w.Write([]byte(`{"error": "Error while performing lookup"}`))
@@ -363,15 +408,21 @@ func (f *Routes) GetLastDeath(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	var (
+		username        string
 		lastdeathTime   int
 		lastdeathString string
 	)
 	for rows.Next() {
-		err = rows.Scan(&lastdeathTime, &lastdeathString)
+		err = rows.Scan(&username, &lastdeathTime, &lastdeathString)
 		if err != nil {
 			w.Write([]byte(`{"error": "Error while performing lookup"}`))
 			return
 		}
+	}
+
+	if username == "" {
+		w.Write([]byte(`{"error": "User not found"}`))
+		return
 	}
 
 	w.Write([]byte(`{"death": "` + lastdeathString + `", "time": ` + strconv.Itoa(lastdeathTime) + `}`))
