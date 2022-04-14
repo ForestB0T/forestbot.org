@@ -83,8 +83,8 @@ func (f *Routes) GetKD(w http.ResponseWriter, r *http.Request) {
 
 	var (
 		username string
-		kills  int
-		deaths int
+		kills    int
+		deaths   int
 	)
 	for rows.Next() {
 		err = rows.Scan(&username, &kills, &deaths)
@@ -127,7 +127,7 @@ func (f *Routes) GetJoins(w http.ResponseWriter, r *http.Request) {
 
 	var (
 		username string
-		joins int
+		joins    int
 	)
 	for rows.Next() {
 		err = rows.Scan(&username, &joins)
@@ -321,8 +321,8 @@ func (f *Routes) GetMessageCount(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	var (
-		name   string
-		cnt int
+		name string
+		cnt  int
 	)
 	for rows.Next() {
 		err = rows.Scan(&name, &cnt)
@@ -434,6 +434,91 @@ type webSocketContents struct {
 	PlayerList      []string     `json:"playerList"`
 	PlayerListExtra []utils.User `json:"playerListExtra"`
 	UniquePlayers   int          `json:"uniquePlayers"`
+}
+
+//
+//lastmessage endpoint handler
+//
+func (f *Routes) GetLastMessage(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	user := params["user"]
+	mc_server := params["server"]
+
+	//get lastmessage from the user in database
+	db := f.DB
+	rows, err := db.Query("SELECT name, message, date FROM messages WHERE name = ? AND mc_server = ? ORDER BY date DESC LIMIT 1", user, mc_server)
+	if err != nil {
+		fmt.Println(err)
+		w.Write([]byte(`{"error": "Error while performing lookup"}`))
+		return
+	}
+
+	defer rows.Close()
+
+	var (
+		username string
+		message  string
+		date     string
+	)
+
+	for rows.Next() {
+		err = rows.Scan(&username, &message, &date)
+		if err != nil {
+			w.Write([]byte(`{"error": "Error while performing lookup"}`))
+			return
+		}
+	}
+
+	if username == "" {
+		w.Write([]byte(`{"error": "User not found"}`))
+		return
+	}
+
+	w.Write([]byte(`{"username": "` + username + `", "message": "` + message + `", "date": "` + date + `"}`))
+
+}
+
+//
+// First message endpoint handler
+//
+func (f *Routes) GetFirstMessage(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	user := params["user"]
+	mc_server := params["server"]
+
+	db := f.DB
+	rows, err := db.Query("SELECT name, message, date FROM messages WHERE name = ? AND mc_server = ? ORDER BY date ASC LIMIT 1", user, mc_server)
+	if err != nil {
+		fmt.Println(err)
+		w.Write([]byte(`{"error": "Error while performing lookup"}`))
+		return
+	}
+
+	defer rows.Close()
+
+	var (
+		username string
+		message  string
+		date     string
+	)
+
+	for rows.Next() {
+		err = rows.Scan(&username, &message, &date)
+		if err != nil {
+			w.Write([]byte(`{"error": "Error while performing lookup"}`))
+			return
+		}
+	}
+
+	if username == "" {
+		w.Write([]byte(`{"error": "User not found"}`))
+		return
+	}
+
+	w.Write([]byte(`{"username": "` + username + `", "message": "` + message + `", "date": "` + date + `"}`))
+
 }
 
 //

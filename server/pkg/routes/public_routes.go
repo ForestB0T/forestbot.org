@@ -67,6 +67,16 @@ func PublicRoutes(router *mux.Router, db *sql.DB) {
 		},
 		{
 			Method:      http.MethodGet,
+			Pattern:     "/lastmessage/{user}/{server}",
+			HandlerFunc: r.GetLastMessage,
+		},
+		{
+			Method:      http.MethodGet,
+			Pattern:     "/firstmessage/{user}/{server}",
+			HandlerFunc: r.GetFirstMessage,
+		},
+		{
+			Method:      http.MethodGet,
 			Pattern:     "/tab/{server}",
 			HandlerFunc: r.GetTablist,
 		},
