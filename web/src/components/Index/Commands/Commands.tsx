@@ -6,15 +6,11 @@ import exampledisccommand from '../../../imgs/exampledisccommand.png'
 const commandList = [
     {
         cmd: '!ping',
-        desc: 'Search a users ping.',
+        desc: 'See a users ping',
     },
     {
         cmd: '!bp',
         desc: 'See who has the best ping'
-    },
-    {
-        cmd: '!come',
-        desc: 'Bot will follow you.'
     },
     {
         cmd: '!fact',
@@ -26,15 +22,15 @@ const commandList = [
     },
     {
         cmd: '!joindate',
-        desc: 'See when a user joined.'
+        desc: 'See when I first saw a user'
     },
     {
         cmd: '!lastseen',
-        desc: 'Check when a user was lastseen by the bot'
+        desc: 'Check when I lastseen a user'
     },
     {
         cmd: '!joins',
-        desc: 'See how many times that user has joined',
+        desc: 'See how many times a user has joined',
     },
     {
         cmd: '!kd',
@@ -46,11 +42,19 @@ const commandList = [
     },
     {
         cmd: '!lastdeath',
-        desc: 'see what a user last died'
+        desc: 'see a users lastdeath'
+    },
+    {
+        cmd: '!firstmessage',
+        desc: 'see a users first message'
+    },
+    {
+        cmd: '!lastmessage',
+        desc: 'see a users last message'
     },
     {
         cmd: '!msgcount',
-        desc: 'See how many messages a user has sent'
+        desc: 'See a users message count'
     },
     {
         cmd: '!nickname',
@@ -86,7 +90,7 @@ const commandList = [
     },
     {
         cmd: '!tps',
-        desc: 'See the servers current TPS'
+        desc: 'See the servers current TPS (certain servers only)'
     },
     {
         cmd: '!urban',
