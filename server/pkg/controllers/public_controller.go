@@ -538,6 +538,8 @@ func (f *Routes) GetTablist(w http.ResponseWriter, r *http.Request) {
 		url_ws = "ws-simply.forestbot.org"
 	case "eusurvival":
 		url_ws = "ws-eu.forestbot.org"
+	case "uneasyvanilla":
+		url_ws = "ws-uneasyvanilla.forestbot.org"
 	case "localhost":
 		url_ws = "localhost:8080"
 	}
