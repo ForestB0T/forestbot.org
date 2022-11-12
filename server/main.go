@@ -9,7 +9,6 @@ import (
 	"path/filepath"
 
 	"github.com/febzey/forestbot-api/pkg/configs"
-	"github.com/febzey/forestbot-api/pkg/database"
 	"github.com/febzey/forestbot-api/pkg/routes"
 	"github.com/febzey/forestbot-api/pkg/utils"
 	"github.com/gorilla/mux"
@@ -28,14 +27,9 @@ func main() {
 		fmt.Println(err)
 	}
 
-	db, err := database.CreateConnection()
-	if err != nil {
-		fmt.Println("Error creating connection to database: ", err)
-	}
-
 	router := mux.NewRouter()
 
-	routes.PublicRoutes(router, db)
+	routes.PublicRoutes(router)
 	router.Use(mux.CORSMethodMiddleware(router))
 
 	FileServer(router)
@@ -47,8 +41,6 @@ func main() {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 	<-c
-
-	database.EndConnection(db)
 
 	log.Println("Server is shutting down...")
 }

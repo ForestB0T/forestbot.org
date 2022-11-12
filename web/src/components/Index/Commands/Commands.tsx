@@ -1,5 +1,5 @@
 //@ts-ignore
-import examplecommand from '../../../imgs/examplecommand.png'
+import examplecommand from '../../../imgs/playtimeExample.png'
 //@ts-ignore
 import exampledisccommand from '../../../imgs/exampledisccommand.png'
 
@@ -11,14 +11,6 @@ const commandList = [
     {
         cmd: '!bp',
         desc: 'See who has the best ping'
-    },
-    {
-        cmd: '!fact',
-        desc: 'Get a random fact'
-    },
-    {
-        cmd: '!fact add',
-        desc: 'Add a fact'
     },
     {
         cmd: '!joindate',
@@ -45,24 +37,8 @@ const commandList = [
         desc: 'see a users lastdeath'
     },
     {
-        cmd: '!firstmessage',
-        desc: 'see a users first message'
-    },
-    {
-        cmd: '!lastmessage',
-        desc: 'see a users last message'
-    },
-    {
         cmd: '!msgcount',
         desc: 'See a users message count'
-    },
-    {
-        cmd: '!nickname',
-        desc: 'Change the bots nickname (certain servers only)'
-    },
-    {
-        cmd: '!oldnames',
-        desc: 'See the old names of a user'
     },
     {
         cmd: '!playtime',
@@ -89,10 +65,6 @@ const commandList = [
         desc: "See the top 5 users with the most playtime"
     },
     {
-        cmd: '!tps',
-        desc: 'See the servers current TPS (certain servers only)'
-    },
-    {
         cmd: '!urban',
         desc: 'Search the urban dictionary',
     },
@@ -114,7 +86,7 @@ const discordCommands = [
     },
     {
         cmd: '/livechat',
-        desc: 'Setup a live chat bridge to interact with game chat via discord channel'
+        desc: 'Setup a live chat bridge to interact with game chat'
     },
     {
         cmd: '/setup',
@@ -141,9 +113,8 @@ const Commands = () => {
                         {
                             commandList.map((command, index) => {
                                 return (
-                                    <li className="flex flex-col lg:flex-row lg:gap-2 gap-0">
-                                        <span className="text-emerald-300 font-semibold font-mono">{command.cmd}</span>
-                                        <span className="font-bold text-white">-</span>
+                                    <li className="flex flex-col lg:flex-row lg:gap-2 gap-0 text-xl">
+                                        <span className="text-emerald-300 font-semibold font-mono">{command.cmd} <span className="font-bold text-white">-</span></span>
                                         <p className="">{command.desc}</p>
                                     </li>
                                 )
@@ -168,9 +139,8 @@ const Commands = () => {
                         {
                             discordCommands.map((command, index) => {
                                 return (
-                                    <li className="flex flex-col lg:flex-row lg:gap-2 gap-0">
-                                        <span className="text-emerald-300 font-semibold font-mono">{command.cmd}</span>
-                                        <span className="font-bold text-white">-</span>
+                                    <li className="flex flex-col lg:flex-row lg:gap-2 gap-0 text-xl">
+                                        <span className="text-emerald-300 font-semibold font-mono">{command.cmd} <span className="font-bold text-white">-</span></span>
                                         <p className="">{command.desc}</p>
                                     </li>
                                 )
