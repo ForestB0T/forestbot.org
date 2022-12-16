@@ -122,9 +122,9 @@ const Commands = () => {
                         }
                     </ul>
                 </div>
-                <div className="mx-auto mt-9">
+                <div className="mx-auto mt-9 w-full lg:w-[90%]">
                     <p className="text-neutral-500 text-sm">example:</p>
-                    <img src={examplecommand}></img>
+                    <img src="src/imgs/playtimeExample.png"></img>
                 </div>
 
             </div>
@@ -148,9 +148,11 @@ const Commands = () => {
                         }
                     </ul>
                 </div>
-                <div className="mx-auto mt-9">
+                <div className="mx-auto mt-9 flex flex-col gap-12">
                     <p className="text-neutral-500 text-sm">example:</p>
-                    <img src={exampledisccommand}></img>
+                    <img src="src/imgs/exampledisccommand.png"></img>
+
+                    <img src="src/imgs/exampletablist.png"></img>
                 </div>
 
             </div>
