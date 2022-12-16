@@ -1,7 +1,9 @@
 //@ts-ignore
-import examplecommand from '../../../imgs/playtimeExample.png'
+import playtimeExample from '../../../imgs/playtimeExample.png'
 //@ts-ignore
 import exampledisccommand from '../../../imgs/exampledisccommand.png'
+//@ts-ignore
+import exampletablist from "../../../imgs/exampletablist.png"
 
 const commandList = [
     {
@@ -124,7 +126,7 @@ const Commands = () => {
                 </div>
                 <div className="mx-auto mt-9 w-full lg:w-[90%]">
                     <p className="text-neutral-500 text-sm">example:</p>
-                    <img src="src/imgs/playtimeExample.png"></img>
+                    <img src={playtimeExample}></img>
                 </div>
 
             </div>
@@ -150,9 +152,9 @@ const Commands = () => {
                 </div>
                 <div className="mx-auto mt-9 flex flex-col gap-12">
                     <p className="text-neutral-500 text-sm">example:</p>
-                    <img src="src/imgs/exampledisccommand.png"></img>
+                    <img src={exampledisccommand}></img>
 
-                    <img src="src/imgs/exampletablist.png"></img>
+                    <img src={exampletablist}></img>
                 </div>
 
             </div>
